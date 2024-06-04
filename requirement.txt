@@ -1,0 +1,7 @@
+PyQt5
+jieba
+requests
+bs4
+wordcloud
+numpy
+chardet
