@@ -3,6 +3,7 @@ import sys
 import time
 import jieba
 import chardet
+import gettext
 import requests
 import wordcloud
 import numpy as np
@@ -12,41 +13,86 @@ from bs4 import BeautifulSoup
 from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5 import QtCore, QtGui, QtWidgets
 from fontTools.ttLib import TTFont, TTCollection
-from ui import Ui_MainWindow, select_font, CustomDialog  # 导入ui文件
+from ui import Ui_MainWindow, select_font, CustomDialog, Language_select  # 导入ui文件
 from PyQt5.QtWidgets import QGraphicsScene, QGraphicsPixmapItem, QMessageBox
 from PyQt5.QtCore import QThreadPool, pyqtSignal, QRunnable, QObject, QCoreApplication
 # 初始化jieba字典
 jieba.set_dictionary(".\dict.txt")
 jieba.initialize()
 # 全局变量
-version = "1.2 Beta 4"
+
+version = "1.2 Beta 5"
 is_selected_font = 0
 dafault_image = 0
 save_font = ""
 bgimage = None
 
+try:
+    with open('language.ini', 'r') as file:
+        language_value = str(file.read())
+    localedir1 = os.path.join(os.path.abspath(
+        os.path.dirname(__file__)), 'locale')
+    translate = gettext.translation(
+        domain=f"{language_value}", localedir=localedir1, languages=[f"{language_value}"])
+    _ = translate.gettext
+except:
+    localedir1 = os.path.join(os.path.abspath(
+        os.path.dirname(__file__)), 'locale')
+    translate = gettext.translation(
+        domain="zh_CN", localedir=localedir1, languages=["zh_CN"])
+    _ = translate.gettext
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
+    def setupUi(self, MainWindow):
+        super().setupUi(MainWindow)
+        self.lineEdit.setText("https://")
+        self.label.setText(_("\n\n\n欢迎使用网页词云生成器！\n"
+                                      "在上方文本框中输入需要分析的网址\n"
+                                      "(需要输入http://或https://协议头)，\n"
+                                      "\n"
+                                      "点击开始按钮，稍后即可在右栏中查看词云。\n\n\n"))
+        self.pushButton.setText(_("开始生成词云图"))
+        self.menu.setTitle(_("设置"))
+        self.menu_2.setTitle(_("保存"))
+
+        self.actionSave = QtWidgets.QAction(_("保存词云图"), MainWindow)
+        self.setbg = QtWidgets.QAction(_("词云形状"), MainWindow)
+        self.setfont = QtWidgets.QAction(_("词云字体"), MainWindow)
+        self.custimg = QtWidgets.QAction(_("使用自定义文字生成词云"), MainWindow)
+        self.actionabout = QtWidgets.QAction(_("关于此工具"), MainWindow)
+        self.setlang = QtWidgets.QAction(_("语言"), MainWindow)
+        self.menu_2.addAction(self.actionSave)
+        self.menu.addAction(self.setbg)
+        self.menu.addAction(self.setfont)
+        self.menu.addAction(self.custimg)
+        self.menu.addSeparator()
+        self.menu.addAction(self.setlang)
+        self.menu.addAction(self.actionabout)
+
     def __init__(self):
         super().__init__()
         self.setupUi(self)
         # 定义按钮功能
         self.setWindowTitle(QCoreApplication.translate(
-            "MainWindow", f"网页词云生成器 {version}"))
+            "MainWindow", _("网页词云生成器 %s") % version))
         self.pushButton.clicked.connect(self.start_process)
         self.lineEdit.returnPressed.connect(self.trigger_button_click)
         self.custimg.triggered.connect(self.cust_img)
         self.actionSave.triggered.connect(self.saveimage)
+        self.setlang.triggered.connect(self.set_lang)
         self.actionabout.triggered.connect(self.about_tool)
         self.setfont.triggered.connect(self.set_Font)
         self.setbg.triggered.connect(self.set_bg)
-        self.set_default_image()
+        if dafault_image == 0:
+            self.set_default_image()
+        else:
+            pass
 
     def saveimage(self):
         if dafault_image == 1:
             print("保存随机图")
-            filename, _ = QtWidgets.QFileDialog.getSaveFileName(
-                None, "保存api随机图片", "./savewc", "来自沉梦小站的随机图API图片 (*.png *.jpg *.webp)")
+            filename, f = QtWidgets.QFileDialog.getSaveFileName(
+                None, _("保存api随机图片"), "./savewc", _("来自沉梦小站的随机图API图片 (*.png *.jpg *.webp)"))
             if filename:
                 image = QtGui.QImage(
                     self.graphicsView.scene().items()[0].pixmap())
@@ -54,8 +100,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 print("api图片已保存至:", filename)
         else:
             print("保存图云")
-            filename, _ = QtWidgets.QFileDialog.getSaveFileName(
-                None, "保存词云图", "./savewc", "来自网页词云生成工具 (*.png)")
+            filename, f = QtWidgets.QFileDialog.getSaveFileName(
+                None, _("保存词云图"), "./savewc", _("来自网页词云生成工具 (*.png)"))
             if filename:
                 image = QtGui.QImage(
                     self.graphicsView.scene().items()[0].pixmap())
@@ -64,7 +110,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def cust_img(self):
         # 自定义文本
-        self.dialog = CustomDialog()
+        self.dialog = CustomDialog_1()
         self.dialog.show()
         self.dialog.confirm_button.clicked.connect(
             lambda: self.start_ana_text(self.dialog.cust_text.toPlainText()))
@@ -72,13 +118,16 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def start_ana_text(self, cust_text):
         if cust_text == "":
-            self.show_message("请输入有效内容！！！", "错误")
+            self.show_message(_("请输入有效内容！！！"), _("错误"))
         else:
             with open('urlciyun_temp.txt', 'w', encoding="utf8") as file:
                 file.write(cust_text)
             self.start_process(1)
-            self.close
 
+    def set_lang(self):
+        print("打开语言设置")
+        lang = Language_select_1()
+        lang.exec_()
     def set_Font(self):
         global is_selected_font
         is_selected_font = 1
@@ -89,8 +138,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def set_bg(self):
         global bgimage, dafault_image  # 遮罩图片
         # 默认由image文件夹存放遮罩图片
-        bgimage, _ = QtWidgets.QFileDialog.getOpenFileName(
-            None, "选择图片文件", "./images", "图片文件 (*.png *.jpg *.jpeg *.webp)")
+        bgimage, f = QtWidgets.QFileDialog.getOpenFileName(
+            None, _("选择图片文件"), "./images", _("图片文件 (*.png *.jpg *.jpeg *.webp)"))
         if bgimage:
             print("选择的文件路径：", bgimage)
             try:
@@ -101,21 +150,21 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 wc_scene.addItem(wc_item)
                 self.update_graphics_view(wc_scene)
                 self.label.setText(
-                    f"您选择了{bgimage}作为词云图形状\n\nTips: 尽可能选择分辨率较高且背景为白色的图片，所选图片分辨率即为词云图分辨率！\n\n正常情况下，您应该可以在右栏看到选择的图片，如果没有正常显示，则图片无法读取，尝试更换图片！")
+                    _("您选择了%s作为词云图形状\n\nTips: 尽可能选择分辨率较高且背景为白色的图片，所选图片分辨率即为词云图分辨率！\n\n正常情况下，您应该可以在右栏看到选择的图片，如果没有正常显示，则图片无法读取，尝试更换图片！") % bgimage)
                 dafault_image = 0
             except Exception as e:
-                self.show_message(e, "错误", 1)
+                self.show_message(e, _("错误"), 1)
         else:
             print("未选择文件")
 
     def about_tool(self):
         print("打开关于")
         msgBox = QMessageBox()
-        msgBox.setWindowTitle("网页词云生成器")
-        msgBox.setText("感谢您使用网页词云生成器！\n\n这是一个作为Py课设的小工具，使用Pyqt5搭建ui，request、bs4和jieba分析网页内容，"
+        msgBox.setWindowTitle(_("网页词云生成器"))
+        msgBox.setText(_("感谢您使用网页词云生成器！\n\n这是一个作为Py课设的小工具，使用Pyqt5搭建ui，request、bs4和jieba分析网页内容，"
                        "再使用wordcloud生成词云。\n\n除此之外，还第一次尝试了多线程等性能优化方式，使用Qthread遇到了不少麻烦，比如无法结束线程，内存泄漏等，后面换用线程池(可以自动结束线程)解决了。\n\n"
                        "不过即便是这样一个小程序，也依旧还有许多的不足（比如MSN和百度系列的网站无法分析），也有许多尚未实现的想法。此工具将会开源，以及在沉梦小站中分享一些遇到的问题及解决方法。\n\n"
-                       f"作者：Yish_\n\n版本：{version}\n\n注：此工具调用了沉梦小站的随机图api")
+                       "作者：Yish_\n\n版本：%s\n\n注：此工具调用了沉梦小站的随机图api") % version)
         msgBox.setIconPixmap(QIcon('wc.ico').pixmap(64, 64))
         msgBox.exec_()
 
@@ -153,7 +202,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def update_label(self, text):
         if not text or not text.strip() or text.strip(" .") == "":
-            self.label.setText("没有在此页面获取到有效信息！")
+            self.label.setText(_("没有在此页面获取到有效信息！"))
         else:
             self.label.setText(text)
 
@@ -169,7 +218,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         msgBox.setText(message)
         msgBox.exec_()
         if mode is None:
-            self.pushButton.setText("开始生成词云图")
+            self.pushButton.setText(_("开始生成词云图"))
             self.progressBar.hide()
         elif mode == 1:
             pass
@@ -182,6 +231,8 @@ class select_font_1(select_font):
     def showFontDialog(self):
         self.selected_font_path = ""
         super().showFontDialog()
+        self.dialog.setWindowTitle("选择词云字体")
+        self.ok_button.setText(_("确定"))
         self.ok_button.clicked.connect(self.accept_font)
         self.fontComboBox.currentFontChanged.connect(self.updateFontPreview)
         self.dialog.exec_()
@@ -205,19 +256,19 @@ class select_font_1(select_font):
                 result, self.selected_font_path = self.find_ttf_name(
                     font_dir, font_name)
             except:
-                self.a.show_message(self, "暂不支持Windows7及以下系统！", "错误", 1)
+                self.a.show_message(self, _("暂不支持Windows7及以下系统！"), _("错误"), 1)
                 # win7字体文件不在此目录下，问就是懒得找了。
             if result != 1:
                 result, self.selected_font_path = self.find_ttf_name(
                     r'C:\Windows\Fonts', font_name)
             if self.selected_font_path == "":
                 self.a.show_message(
-                    self, "无法找到此字体的实际地址\n请尝试更换其他字体！", "无法设置字体", 1)
+                    self, _("无法找到此字体的实际地址\n请尝试更换其他字体！"), _("无法设置字体"), 1)
                 # QT字体选择组件返回的是字体family名，而wordcloud只接受字体的实际文件路径
                 # 因此需要重新对应字体名与实际文件位置
                 self.ok_button.setEnabled(False)
         except Exception as e:
-            self.a.show_message(self, e, "错误", 1)
+            self.a.show_message(self, e, _("错误"), 1)
 
     def find_ttf_name(self, font_dir, select_name=None):
         # 遍历字体文件目录下的所有 .ttf 文件
@@ -241,7 +292,7 @@ class select_font_1(select_font):
                             pass
                         elif select_name == name:
                             font.close()
-                            print(f"找到字体{name,self.selected_font_path }")
+                            print(_("找到字体%s, %s") % (name, self.selected_font_path))
                             self.ok_button.setEnabled(True)
                             result = 1
                             return result, self.selected_font_path
@@ -265,7 +316,7 @@ class select_font_1(select_font):
         except:
             pass
         # 遍历字体集合中的每个子字体
-        for _, font in enumerate(font_collection):
+        for f, font in enumerate(font_collection):
             metadata = font['name']
             for record in metadata.names:
                 if record.nameID >= 0:
@@ -276,7 +327,7 @@ class select_font_1(select_font):
                     if select_name == None:
                         pass
                     elif select_name == name:
-                        print(f"找到字体{name,self.selected_font_path }")
+                        print(_("找到字体%s, %s") % (name, self.selected_font_path))
                         self.ok_button.setEnabled(True)
                         result = 1
                         font.close()
@@ -285,6 +336,70 @@ class select_font_1(select_font):
         font.close()
         font_collection.close()
         return 0, ""
+class CustomDialog_1(CustomDialog):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle(_("使用自定义文本生成词云图"))
+        self.cust_text.setPlainText(_("""未行之路:
+                                    在你消失的夜里穿行 
+                                    微风送来最后一封信 
+                                    通篇找寻沉默的音讯 
+                                    谜底也许  不期而遇 
+                                    
+                                    悲欢离合是旅行的考卷 
+                                    明月下想象另一轮明月 
+                                    假如某刻你我再次相见 
+                                    过往 能否重现 
+                                    故事 再向前 
+                                    
+                                    我从未原地等待 
+                                    追赶命运的节拍 
+                                    夜幕深如海 而你照亮远方之外 
+                                    无论海角天涯 你找到我出发
+                                    前路无阻 就算一切崩塌 
+                                    
+                                    当白雪渐渐消融 
+                                    当坚冰显现裂缝 
+                                    而你是否已经扬帆启航 乘着风 
+                                    无论海角天涯 我找到你出发
+                                    我们从未迷路 
+                                    我们终将重逢"""))
+        self.confirm_button = QtWidgets.QPushButton(_("开始生成词云图"), self)
+        self.layout.addWidget(self.confirm_button)
+
+class Language_select_1(Language_select):
+    def __init__(self):
+        super().__init__()
+        self.a = MainWindow()
+        self.setWindowTitle(_("选择语言"))
+        self.populateComboBox()
+        self.langok_button = QtWidgets.QPushButton(_("确定"), self)
+        self.langok_button.setMinimumHeight(40)
+        self.layout.addWidget(self.langok_button)
+        self.langok_button.clicked.connect(self.change_lang)
+        
+
+    def populateComboBox(self):
+        # 读取指定目录下的文件夹名
+        locale_dir = "./locale"
+        try:
+            if os.path.exists(locale_dir) and os.path.isdir(locale_dir):
+                folders = [folder for folder in os.listdir(locale_dir) if os.path.isdir(os.path.join(locale_dir, folder))]
+                self.comboBox.addItems(folders)
+        except Exception as e:
+            print(f"读取语言失败:{e}")
+
+    def change_lang(self):
+        locale = self.comboBox.currentText()
+        print(locale)
+        try:
+            with open('language.ini', 'w', encoding="utf8") as file:
+                file.write(locale)
+            self.a.show_message(_("修改语言后重启程序生效"), _("提示"), 1)
+
+        except Exception as e:
+            print(f"修改语言失败:{e}")
+            self.a.show_message(e, _("错误"), 1)
 
 
 class WorkerSignals(QObject):
@@ -391,21 +506,21 @@ class WorkerThread(QRunnable):
                             urldata.encoding = encoding
                             content = urldata.text
                             if is_content_valid(content):
-                                print(f"尝试在此页面使用{encoding}编码")
+                                print(_("尝试在此页面使用%s编码") % encoding)
                                 break
                         except:
                             continue
                 else:
-                    print(f"此页面使用{detected_encoding}编码")
+                    print(_("此页面使用%s编码") % detected_encoding)
                     pass
 
             except requests.exceptions.SSLError:
                 transmit_message(
-                    "网站SSL证书不存在或者失效，可能导致无法访问或者使您的设备遭受攻击。\n若仍要继续访问，请去除链接\'https\'中的\'s\'。", "警告")
+                    _("网站SSL证书不存在或者失效，可能导致无法访问或者使您的设备遭受攻击。\n若仍要继续访问，请去除链接\'https\'中的\'s\'。"), _("警告"))
                 error = True
             except requests.exceptions.RequestException as e:
-                error_message = f"请输入可访问的网址！！！\n{e}"
-                transmit_message(error_message, "错误")
+                error_message = _("请输入可访问的网址！！！\n%s") % e
+                transmit_message(error_message, _("错误"))
                 error = True
             return content if content else None, error
 
@@ -414,7 +529,7 @@ class WorkerThread(QRunnable):
                 with open('urlciyun_temp.txt', 'w', encoding="utf8") as file:
                     file.write(data)
             except Exception as e:
-                print(f"保存url文本出错: {e}")
+                print(_("保存url文本出错: %s") % e)
 
         def make_wc():
             global dafault_image, is_selected_font, bgimage
@@ -466,27 +581,27 @@ class WorkerThread(QRunnable):
                 self.signals.update_graphics_view.emit(self.scene)
                 dafault_image = 0
             except Exception as e:
-                transmit_message(f"生成词云图出错: {e}", "错误")
+                transmit_message(_("生成词云图出错: %s") % e, _("错误"))
 
         def transmit_message(text, title=None):
             if title is None:
-                title = "提示"
+                title = _("提示")
             self.signals.show_message.emit(text, title)
 
         def stop():
             self.signals.progress_changed.emit(0)
-            self.signals.update_pushbotton.emit("词云图生成完毕")
+            self.signals.update_pushbotton.emit(_("词云图生成完毕"))
             self.signals.enable_button.emit()  # 启用按钮
-            self.signals.update_pushbotton.emit("开始生成词云图")
+            self.signals.update_pushbotton.emit(_("开始生成词云图"))
             self.signals.finished.emit()
             # 向主线程发送终止信号
 
         # run
         if self.custom == 1:
             # 自定义模式
-            self.signals.update_pushbotton.emit("词云图装载中...\n正在分析文本...")
+            self.signals.update_pushbotton.emit(_("词云图装载中...\n正在分析文本..."))
             update_progress_bar(0, 20)
-            self.signals.update_pushbotton.emit("词云图装载中...\n(正在生成词云图，卡顿是正常现象)")
+            self.signals.update_pushbotton.emit(_("词云图装载中...\n(正在生成词云图，卡顿是正常现象)"))
             update_progress_bar(20, 50)
             make_wc()
             update_progress_bar(50, 100, 0.01)
@@ -499,18 +614,18 @@ class WorkerThread(QRunnable):
             if error:
                 pass
             else:
-                transmit_message("网页无法访问，请检查链接是否正确！", "错误")
+                transmit_message(_("网页无法访问，请检查链接是否正确！"), _("错误"))
             stop()
             return
-        self.signals.update_pushbotton.emit("词云图装载中...\n正在尝试访问网站...")
+        self.signals.update_pushbotton.emit(_("词云图装载中...\n正在尝试访问网站..."))
         update_progress_bar(0, 20)
         soup = BeautifulSoup(text, "html.parser")
 
         title = soup.title.string if soup.title else None
-        a = "标题: " + title + "\n\n" if title else ""
+        a = _("标题: ") + title + "\n\n" if title else ""
 
         description = soup.find('meta', attrs={'name': 'description'})
-        b = "网站简介:" + description['content'] + "\n" if description else ""
+        b = _("网站简介:") + description['content'] + "\n" if description else ""
 
         c = a + b
         self.signals.update_label.emit(c)
@@ -518,7 +633,7 @@ class WorkerThread(QRunnable):
         text = soup.get_text()
         text = text.replace('\n', ' ')
         update_progress_bar(20, 50)
-        self.signals.update_pushbotton.emit("词云图装载中...\n(正在生成词云图，卡顿是正常现象)")
+        self.signals.update_pushbotton.emit(_("词云图装载中...\n(正在生成词云图，卡顿是正常现象)"))
         save_into_file(text)
         make_wc()
         update_progress_bar(50, 100, 0.01)
