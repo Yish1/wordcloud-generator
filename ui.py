@@ -115,40 +115,14 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menu_2.menuAction())
 
         # 菜单
-        self.actionSave = QtWidgets.QAction("保存词云图", MainWindow)
-        self.menu_2.addAction(self.actionSave)
-        # self.setlang = QtWidgets.QAction("语言", MainWindow)
-        # self.menu.addAction(self.setlang)
-        self.setbg = QtWidgets.QAction("词云形状", MainWindow)
-        self.menu.addAction(self.setbg)
-        self.setfont = QtWidgets.QAction("词云字体", MainWindow)
-        self.menu.addAction(self.setfont)
-        self.custimg = QtWidgets.QAction("使用自定义文字生成词云", MainWindow)
-        self.menu.addAction(self.custimg)
-        self.menu.addSeparator()
-        self.actionabout = QtWidgets.QAction("关于此工具", MainWindow)
-        self.menu.addAction(self.actionabout)
+
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
         self.menubar.addAction(self.menu_2.menuAction())
         self.menubar.addAction(self.menu.menuAction())
-
-        self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-
-    def retranslateUi(self, MainWindow):
-        _translate = QtCore.QCoreApplication.translate
-        self.lineEdit.setText(_translate("MainWindow", "https://"))
-        self.label.setText(_translate("MainWindow", "\n\n\n欢迎使用网页词云生成器！\n"
-                                      "在上方文本框中输入需要分析的网址\n"
-                                      "(需要输入http://或https://协议头)，\n"
-                                      "\n"
-                                      "点击开始按钮，稍后即可在右栏中查看词云。\n\n\n"))
-        self.pushButton.setText(_translate("MainWindow", "开始生成词云图"))
-        self.menu.setTitle(_translate("MainWindow", "设置"))
-        self.menu_2.setTitle(_translate("MainWindow", "保存"))
 
     def trigger_button_click(self):
         self.pushButton.click()
@@ -157,11 +131,9 @@ class Ui_MainWindow(object):
 class select_font(QtWidgets.QDialog):  # 字体选择窗口
     def showFontDialog(self):
         self.dialog = QtWidgets.QDialog()
-        self.dialog.setWindowTitle("选择词云字体")
         self.dialog.setMinimumSize(300, 200)
         layout = QtWidgets.QVBoxLayout(self.dialog)
         self.fontComboBox = QtWidgets.QFontComboBox()
-
         self.preview_text = '''
             0123456789 !@#$%^&*()_+-=[]{}|;:'\",.<>/?\n\n
             沉梦小站(cmxz.top)是一个密切关注IT互联网、勤于技术分享的个人博客\n\n
@@ -169,7 +141,6 @@ class select_font(QtWidgets.QDialog):  # 字体选择窗口
             请选择适合当前语言的字体，否则词云可能无法正常显示！\n\n
             Please select a font suitable for the current language, otherwise the word cloud may not display correctly!\n\n
         '''
-
         self.fontPreviewLabel = QtWidgets.QLabel(self.preview_text)
         self.fontPreviewLabel.setWordWrap(True)
         layout.addWidget(self.fontComboBox)
@@ -187,39 +158,19 @@ class select_font(QtWidgets.QDialog):  # 字体选择窗口
 class CustomDialog(QtWidgets.QDialog):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("使用自定义文本生成词云图")
         self.setMinimumSize(600, 300)
         self.layout = QtWidgets.QVBoxLayout()
-
         self.cust_text = QtWidgets.QTextEdit(self)
-        self.cust_text.setPlainText("""未行之路:
-                                    在你消失的夜里穿行 
-                                    微风送来最后一封信 
-                                    通篇找寻沉默的音讯 
-                                    谜底也许  不期而遇 
-                                    
-                                    悲欢离合是旅行的考卷 
-                                    明月下想象另一轮明月 
-                                    假如某刻你我再次相见 
-                                    过往 能否重现 
-                                    故事 再向前 
-                                    
-                                    我从未原地等待 
-                                    追赶命运的节拍 
-                                    夜幕深如海 而你照亮远方之外 
-                                    无论海角天涯 你找到我出发
-                                    前路无阻 就算一切崩塌 
-                                    
-                                    当白雪渐渐消融 
-                                    当坚冰显现裂缝 
-                                    而你是否已经扬帆启航 乘着风 
-                                    无论海角天涯 我找到你出发
-                                    我们从未迷路 
-                                    我们终将重逢""")
         self.cust_text.setMinimumHeight(200)
         self.layout.addWidget(self.cust_text)
+        self.setLayout(self.layout)
 
-        self.confirm_button = QtWidgets.QPushButton("开始生成词云图", self)
-        self.layout.addWidget(self.confirm_button)
 
+class Language_select(QtWidgets.QDialog):
+    def __init__(self):
+        super().__init__()
+        self.setMinimumSize(200, 100)
+        self.layout = QtWidgets.QVBoxLayout()
+        self.comboBox = QtWidgets.QComboBox()
+        self.layout.addWidget(self.comboBox)
         self.setLayout(self.layout)
