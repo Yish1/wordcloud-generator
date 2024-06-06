@@ -132,6 +132,8 @@ class select_font(QtWidgets.QDialog):  # 字体选择窗口
     def showFontDialog(self):
         self.dialog = QtWidgets.QDialog()
         self.dialog.setMinimumSize(300, 200)
+        icon = QtGui.QIcon("wc.ico")
+        self.dialog.setWindowIcon(icon)
         layout = QtWidgets.QVBoxLayout(self.dialog)
         self.fontComboBox = QtWidgets.QFontComboBox()
         self.preview_text = '''
@@ -159,6 +161,8 @@ class CustomDialog(QtWidgets.QDialog):
     def __init__(self):
         super().__init__()
         self.setMinimumSize(600, 300)
+        icon = QtGui.QIcon("wc.ico")
+        self.setWindowIcon(icon)
         self.layout = QtWidgets.QVBoxLayout()
         self.cust_text = QtWidgets.QTextEdit(self)
         self.cust_text.setMinimumHeight(200)
@@ -170,6 +174,8 @@ class Language_select(QtWidgets.QDialog):
     def __init__(self):
         super().__init__()
         self.setMinimumSize(200, 100)
+        icon = QtGui.QIcon("wc.ico")
+        self.setWindowIcon(icon)
         self.layout = QtWidgets.QVBoxLayout()
         self.comboBox = QtWidgets.QComboBox()
         self.layout.addWidget(self.comboBox)
