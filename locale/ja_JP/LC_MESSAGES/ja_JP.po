@@ -1,0 +1,357 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2024-06-06 15:26+0800\n"
+"PO-Revision-Date: 2024-06-06 15:56+0800\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ja_JP\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.5\n"
+"X-Generator: Poedit 3.4.4\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+#: E:\ctest\o\urlwc.py:49
+msgid ""
+"\n"
+"\n"
+"\n"
+"欢迎使用网页词云生成器！\n"
+"在上方文本框中输入需要分析的网址\n"
+"(需要输入http://或https://协议头)，\n"
+"\n"
+"点击开始按钮，稍后即可在右栏中查看词云。\n"
+"\n"
+"\n"
+msgstr ""
+"\n"
+"\n"
+"\n"
+"ウェブワードクラウドジェネレーターをご利用いただきありがとうございま"
+"す！\n"
+"分析するウェブサイトのURLを上記のテキストボックスに入力してください\n"
+"(http://またはhttps://プロトコルを含める必要があります)。\n"
+"\n"
+"開始ボタンをクリックすると、しばらくすると右側のパネルでワードクラウドが"
+"表示されます。\n"
+"\n"
+"\n"
+
+#: E:\ctest\o\urlwc.py:54 E:\ctest\o\urlwc.py:221 E:\ctest\o\urlwc.py:367
+#: E:\ctest\o\urlwc.py:595
+msgid "开始生成词云图"
+msgstr "ワードクラウドの生成を開始"
+
+#: E:\ctest\o\urlwc.py:55
+msgid "设置"
+msgstr "設定"
+
+#: E:\ctest\o\urlwc.py:56
+msgid "保存"
+msgstr "保存"
+
+#: E:\ctest\o\urlwc.py:58 E:\ctest\o\urlwc.py:104
+msgid "保存词云图"
+msgstr "ワードクラウドを保存"
+
+#: E:\ctest\o\urlwc.py:59
+msgid "词云形状"
+msgstr "ワードクラウドの形状"
+
+#: E:\ctest\o\urlwc.py:60
+msgid "词云字体"
+msgstr "ワードクラウドのフォント"
+
+#: E:\ctest\o\urlwc.py:61
+msgid "使用自定义文字生成词云"
+msgstr "カスタムテキストを使用してワードクラウドを生成"
+
+#: E:\ctest\o\urlwc.py:62
+msgid "关于此工具"
+msgstr "このツールについて"
+
+#: E:\ctest\o\urlwc.py:63
+msgid "语言"
+msgstr "言語"
+
+#: E:\ctest\o\urlwc.py:77
+msgid "网页词云生成器 %s"
+msgstr "ウェブワードクラウドジェネレーター %s"
+
+#: E:\ctest\o\urlwc.py:95
+msgid "保存api随机图片"
+msgstr "APIランダム画像の保存"
+
+#: E:\ctest\o\urlwc.py:95
+msgid "来自沉梦小站的随机图API图片 (*.png *.jpg *.webp)"
+msgstr "シェンムー小站のランダム画像APIからの画像 (*.png *.jpg *.webp)"
+
+#: E:\ctest\o\urlwc.py:104
+msgid "来自网页词云生成工具 (*.png)"
+msgstr "ウェブワードクラウドジェネレーターからの画像 (*.png)"
+
+#: E:\ctest\o\urlwc.py:121
+msgid "请输入有效内容！！！"
+msgstr "有効なコンテンツを入力してください！！！"
+
+#: E:\ctest\o\urlwc.py:121 E:\ctest\o\urlwc.py:156 E:\ctest\o\urlwc.py:259
+#: E:\ctest\o\urlwc.py:271 E:\ctest\o\urlwc.py:402 E:\ctest\o\urlwc.py:523
+#: E:\ctest\o\urlwc.py:584 E:\ctest\o\urlwc.py:617
+msgid "错误"
+msgstr "エラー"
+
+#: E:\ctest\o\urlwc.py:142
+msgid "图片文件 (*.png *.jpg *.jpeg *.webp)"
+msgstr "画像ファイル (*.png *.jpg *.jpeg *.webp)"
+
+#: E:\ctest\o\urlwc.py:142
+msgid "选择图片文件"
+msgstr "画像ファイルを選択"
+
+#: E:\ctest\o\urlwc.py:153
+msgid ""
+"您选择了%s作为词云图形状\n"
+"\n"
+"Tips: 尽可能选择分辨率较高且背景为白色的图片，所选图片分辨率即为词云图分"
+"辨率！\n"
+"\n"
+"正常情况下，您应该可以在右栏看到选择的图片，如果没有正常显示，则图片无法"
+"读取，尝试更换图片！"
+msgstr ""
+"ワードクラウドの形状として%sを選択しました\n"
+"\n"
+"ヒント: 高解像度かつ背景が白い画像を選択することをお勧めします。選択した"
+"画像の解像度がワードクラウドの解像度になります！\n"
+"\n"
+"通常、右側のパネルで選択した画像が表示されるはずです。正常に表示されない"
+"場合は、画像が読み込めない可能性がありますので、画像を変更してみてくださ"
+"い！"
+
+#: E:\ctest\o\urlwc.py:163
+msgid "网页词云生成器"
+msgstr "ウェブワードクラウドジェネレーター"
+
+#: E:\ctest\o\urlwc.py:164
+msgid ""
+"感谢您使用网页词云生成器！\n"
+"\n"
+"这是一个作为Py课设的小工具，使用Pyqt5搭建ui，request、bs4和jieba分析网页"
+"内容，再使用wordcloud生成词云。\n"
+"\n"
+"除此之外，还第一次尝试了多线程等性能优化方式，使用Qthread遇到了不少麻"
+"烦，比如无法结束线程，内存泄漏等，后面换用线程池(可以自动结束线程)解决"
+"了。\n"
+"\n"
+"不过即便是这样一个小程序，也依旧还有许多的不足（比如MSN和百度系列的网站"
+"无法分析），也有许多尚未实现的想法。此工具将会开源，以及在沉梦小站中分享"
+"一些遇到的问题及解决方法。\n"
+"\n"
+"作者：Yish_\n"
+"\n"
+"版本：%s\n"
+"\n"
+"注：此工具调用了沉梦小站的随机图api"
+msgstr ""
+"ウェブワードクラウドジェネレーターをご利用いただきありがとうございま"
+"す！\n"
+"\n"
+"これは、Py課題として作成された小さなツールで、Pyqt5でUIを構築し、"
+"request、bs4、およびjiebaでウェブページのコンテンツを解析し、その後"
+"wordcloudでワードクラウドを生成します。\n"
+"\n"
+"その他にも、初めてマルチスレッドなどのパフォーマンス最適化手法を試みまし"
+"た。Qthreadを使用すると、スレッドを終了できない、メモリリークなどの問題"
+"がありましたが、後でスレッドプール（自動的にスレッドを終了できる）に変更"
+"して解決しました。\n"
+"\n"
+"しかし、このような小さなプログラムでも、まだ多くの不足があります（たとえ"
+"ば、MSNおよび百度シリーズのウェブサイトは解析できません）。また、実装さ"
+"れていないアイデアも多くあります。このツールはオープンソース化され、ま"
+"た、問題や解決策について沉梦小站で共有される予定です。\n"
+"\n"
+"作者：Yish_\n"
+"\n"
+"バージョン：%s\n"
+"\n"
+"注：このツールは沉梦小站のランダム画像APIを呼び出しています"
+
+#: E:\ctest\o\urlwc.py:205
+msgid "没有在此页面获取到有效信息！"
+msgstr "このページで有効な情報が取得できませんでした！"
+
+#: E:\ctest\o\urlwc.py:235 E:\ctest\o\urlwc.py:376
+msgid "确定"
+msgstr "確定"
+
+#: E:\ctest\o\urlwc.py:259
+msgid "暂不支持Windows7及以下系统！"
+msgstr "Windows7およびそれ以下のシステムは現在サポートされていません！"
+
+#: E:\ctest\o\urlwc.py:266
+msgid ""
+"无法找到此字体的实际地址\n"
+"请尝试更换其他字体！"
+msgstr ""
+"このフォントの実際のアドレスが見つかりません\n"
+"別のフォントをお試しください！"
+
+#: E:\ctest\o\urlwc.py:266
+msgid "无法设置字体"
+msgstr "フォントを設定できません"
+
+#: E:\ctest\o\urlwc.py:295 E:\ctest\o\urlwc.py:330
+msgid "找到字体%s, %s"
+msgstr "フォント%s、%sが見つかりました"
+
+#: E:\ctest\o\urlwc.py:342
+msgid "使用自定义文本生成词云图"
+msgstr "カスタムテキストを使用してワードクラウドを生成します"
+
+#: E:\ctest\o\urlwc.py:343
+msgid ""
+"未行之路:\n"
+"                                    在你消失的夜里穿行 \n"
+"                                    微风送来最后一封信 \n"
+"                                    通篇找寻沉默的音讯 \n"
+"                                    谜底也许  不期而遇 \n"
+"                                    \n"
+"                                    悲欢离合是旅行的考卷 \n"
+"                                    明月下想象另一轮明月 \n"
+"                                    假如某刻你我再次相见 \n"
+"                                    过往 能否重现 \n"
+"                                    故事 再向前 \n"
+"                                    \n"
+"                                    我从未原地等待 \n"
+"                                    追赶命运的节拍 \n"
+"                                    夜幕深如海 而你照亮远方之外 \n"
+"                                    无论海角天涯 你找到我出发\n"
+"                                    前路无阻 就算一切崩塌 \n"
+"                                    \n"
+"                                    当白雪渐渐消融 \n"
+"                                    当坚冰显现裂缝 \n"
+"                                    而你是否已经扬帆启航 乘着风 \n"
+"                                    无论海角天涯 我找到你出发\n"
+"                                    我们从未迷路 \n"
+"                                    我们终将重逢"
+msgstr ""
+"未行之路:\n"
+"                        Traveling in the nights you've left me in.\n"
+"                        Even nowhere I can find you out,\n"
+"                        The answer is not far off now.\n"
+"                        \n"
+"                        This journey of ours has been bittersweet.\n"
+"                        Close my eyes wondering what you would have "
+"dreamed.\n"
+"                        If you were here standing next to me,\n"
+"                        Would you know how I feel,\n"
+"                        And see what I see?\n"
+"                        \n"
+"                        Know that I'll always try.\n"
+"                        Finding your rhythm and rhyme.\n"
+"                        Though the nights are long and dark, I‘ll see "
+"you shining bright.\n"
+"                        And no matter where you are, you've come with "
+"me this far.\n"
+"                        Showing the way when all else falls apart.\n"
+"                        \n"
+"                        When the snow all melts away,\n"
+"                        And the ice finally breaks.\n"
+"                        Have you taken off, are you already on your "
+"way?\n"
+"                        No matter where you are, I've come with you "
+"this far.\n"
+"                        I’m never really lost.\n"
+"                        Our paths will surely cross"
+
+#: E:\ctest\o\urlwc.py:374
+msgid "选择语言"
+msgstr "言語を選択してください"
+
+#: E:\ctest\o\urlwc.py:398
+msgid "修改语言后重启程序生效"
+msgstr "言語を変更した後、プログラムを再起動してください"
+
+#: E:\ctest\o\urlwc.py:398 E:\ctest\o\urlwc.py:588
+msgid "提示"
+msgstr "ヒント"
+
+#: E:\ctest\o\urlwc.py:509
+msgid "尝试在此页面使用%s编码"
+msgstr "このページで%sエンコードを使用してみてください"
+
+#: E:\ctest\o\urlwc.py:514
+msgid "此页面使用%s编码"
+msgstr "このページは%sエンコードを使用しています"
+
+#: E:\ctest\o\urlwc.py:519
+msgid ""
+"网站SSL证书不存在或者失效，可能导致无法访问或者使您的设备遭受攻击。\n"
+"若仍要继续访问，请去除链接'https'中的's'。"
+msgstr ""
+"WebサイトのSSL証明書が存在しないか、期限が切れているため、アクセスできな"
+"いか、お使いのデバイスが攻撃される可能性があります。\n"
+"アクセスを続行する場合は、リンクの'https'から's'を削除してください。"
+
+#: E:\ctest\o\urlwc.py:519
+msgid "警告"
+msgstr "警告"
+
+#: E:\ctest\o\urlwc.py:522
+msgid ""
+"请输入可访问的网址！！！\n"
+"%s"
+msgstr ""
+"アクセス可能なURLを入力してください！！！\n"
+"%s"
+
+#: E:\ctest\o\urlwc.py:532
+msgid "保存url文本出错: %s"
+msgstr "URLテキストの保存エラー：%s"
+
+#: E:\ctest\o\urlwc.py:584
+msgid "生成词云图出错: %s"
+msgstr "ワードクラウドの生成エラー：%s"
+
+#: E:\ctest\o\urlwc.py:593
+msgid "词云图生成完毕"
+msgstr "ワードクラウドの生成が完了しました"
+
+#: E:\ctest\o\urlwc.py:602
+msgid ""
+"词云图装载中...\n"
+"正在分析文本..."
+msgstr ""
+"ワードクラウドをロードしています...\n"
+"テキストを分析しています..."
+
+#: E:\ctest\o\urlwc.py:604 E:\ctest\o\urlwc.py:636
+msgid ""
+"词云图装载中...\n"
+"(正在生成词云图，卡顿是正常现象)"
+msgstr ""
+"ワードクラウドをロードしています...\n"
+"(ワードクラウドを生成中です。一時停止は正常な現象です)"
+
+#: E:\ctest\o\urlwc.py:617
+msgid "网页无法访问，请检查链接是否正确！"
+msgstr ""
+"ウェブページにアクセスできません。リンクが正しいかどうかを確認してくださ"
+"い！"
+
+#: E:\ctest\o\urlwc.py:620
+msgid ""
+"词云图装载中...\n"
+"正在尝试访问网站..."
+msgstr ""
+"ワードクラウドをロードしています...\n"
+"ウェブサイトにアクセスしています..."
+
+#: E:\ctest\o\urlwc.py:625
+msgid "标题: "
+msgstr "タイトル："
+
+#: E:\ctest\o\urlwc.py:628
+msgid "网站简介:"
+msgstr "ウェブサイトの概要："
