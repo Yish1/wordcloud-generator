@@ -18,5 +18,5 @@ _A small tool that generates a word cloud by reading the content of a given URL 
 - [x] 自定义文字
 - [x] 多语言支持
 - [x] 网站抓取
-- [ ] msn和百度系的网页暂时无法抓取
+- [ ] msn和百度系的网页暂时无法抓取，请使用自定义文本模式
 
