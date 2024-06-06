@@ -10,8 +10,11 @@ _A small tool that generates a word cloud by reading the content of a given URL 
 </div>
 
 ## 使用方式
-开袋即食
-
+1.安装依赖库
+```shell
+pip install -i requirement.txt
+```
+2.开袋即食
 ## 特色
 - [x] 自定义字体
 - [x] 自定义图形
