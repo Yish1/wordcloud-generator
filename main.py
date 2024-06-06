@@ -20,8 +20,7 @@ from PyQt5.QtCore import QThreadPool, pyqtSignal, QRunnable, QObject, QCoreAppli
 jieba.set_dictionary(".\dict.txt")
 jieba.initialize()
 # 全局变量
-
-version = "1.2 Beta 5"
+version = "1.2"
 is_selected_font = 0
 dafault_image = 0
 save_font = ""
@@ -160,6 +159,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def about_tool(self):
         print("打开关于")
         msgBox = QMessageBox()
+        msgBox.setWindowIcon(QIcon('wc.ico'))
         msgBox.setWindowTitle(_("网页词云生成器"))
         msgBox.setText(_("感谢您使用网页词云生成器！\n\n这是一个作为Py课设的小工具，使用Pyqt5搭建ui，request、bs4和jieba分析网页内容，"
                        "再使用wordcloud生成词云。\n\n除此之外，还第一次尝试了多线程等性能优化方式，使用Qthread遇到了不少麻烦，比如无法结束线程，内存泄漏等，后面换用线程池(可以自动结束线程)解决了。\n\n"
