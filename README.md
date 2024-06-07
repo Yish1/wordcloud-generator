@@ -1,5 +1,5 @@
 <div align="center">
-[wc.png](https://s2.loli.net/2024/06/07/VKlp2amoNB35FiJ.png)
+<a href="https://sm.ms/image/VKlp2amoNB35FiJ" target="_blank"><img src="https://s2.loli.net/2024/06/07/VKlp2amoNB35FiJ.png" /></a>
 </div>
 <div align="center">
 
