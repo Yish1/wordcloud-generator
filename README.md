@@ -1,5 +1,5 @@
 <div align="center">
-<a href="https://sm.ms/image/VKlp2amoNB35FiJ" target="_blank"><img src="https://s2.loli.net/2024/06/07/VKlp2amoNB35FiJ.png" /></a>
+	<a><img src="https://s2.loli.net/2024/06/07/VKlp2amoNB35FiJ.png" width="180" height="180" alt="wordcloud-generator"></a>
 </div>
 <div align="center">
 
