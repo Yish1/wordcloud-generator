@@ -1,5 +1,5 @@
 <div align="center">
-![wc.png](https://s2.loli.net/2024/06/07/VKlp2amoNB35FiJ.png)
+[wc.png](https://s2.loli.net/2024/06/07/VKlp2amoNB35FiJ.png)
 </div>
 <div align="center">
 
