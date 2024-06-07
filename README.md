@@ -8,6 +8,7 @@ _一个通过读取输入的网址的内容 或自定义的文本 生成词云�
 _A small tool that generates a word cloud by reading the content of a given URL or custom text._
 
 </div>
+
 ## 特色
 - [x] 自定义字体
 - [x] 自定义图形
