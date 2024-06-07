@@ -1,5 +1,5 @@
 <div align="center">
-<a><img src="./wc.ico" width="180" height="180" alt="wordcloud-generator"></a>
+<a><img src="./wc.png" width="180" height="180" alt="wordcloud-generator"></a>
 </div>
 <div align="center">
 
