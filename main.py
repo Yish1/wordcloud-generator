@@ -9,18 +9,18 @@ import wordcloud
 import numpy as np
 from PIL import Image
 from bs4 import BeautifulSoup
-# import ptvsd  # QThread断点工具
+import ptvsd  # QThread断点工具
 from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5 import QtCore, QtGui, QtWidgets
 from fontTools.ttLib import TTFont, TTCollection
 from ui import Ui_MainWindow, select_font, CustomDialog, Language_select  # 导入ui文件
-from PyQt5.QtWidgets import QGraphicsScene, QGraphicsPixmapItem, QMessageBox
 from PyQt5.QtCore import QThreadPool, pyqtSignal, QRunnable, QObject, QCoreApplication
+from PyQt5.QtWidgets import QGraphicsScene, QGraphicsPixmapItem, QMessageBox, QApplication, QWidget
 # 初始化jieba字典
 jieba.set_dictionary(".\dict.txt")
 jieba.initialize()
 # 全局变量
-version = "1.2"
+version = "1.3 Beta 1"
 is_selected_font = 0
 dafault_image = 0
 save_font = ""
@@ -86,7 +86,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.set_default_image()
         else:
             pass
-
+    def closeEvent(self, event):
+        # 关闭其他窗口的代码
+        for widget in QApplication.topLevelWidgets():
+            if isinstance(widget, QWidget) and widget != self:
+                widget.close()
+        event.accept()
     def saveimage(self):
         if dafault_image == 1:
             print("保存随机图")
@@ -419,12 +424,14 @@ class GetDefaultPicture(QRunnable):
         self.signals = WorkerSignals()
 
     def run(self):
-        # ptvsd.debug_this_thread()  # 在此线程启动断点调试
+        ptvsd.debug_this_thread()  # 在此线程启动断点调试
         global dafault_image
         try:
             url = "https://cmxz.top/images/api/api.php"
             response = requests.get(url, timeout=3)
             if response.text == "访问太频繁，服务器要炸":
+                raise requests.exceptions.Timeout
+            if response.status_code != 200:
                 raise requests.exceptions.Timeout
             img_data = response.content
             pixmap = QPixmap()
