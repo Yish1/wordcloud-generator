@@ -9,7 +9,7 @@ import wordcloud
 import numpy as np
 from PIL import Image
 from bs4 import BeautifulSoup
-import ptvsd  # QThread断点工具
+# import ptvsd  # QThread断点工具
 from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5 import QtCore, QtGui, QtWidgets
 from fontTools.ttLib import TTFont, TTCollection
@@ -424,7 +424,7 @@ class GetDefaultPicture(QRunnable):
         self.signals = WorkerSignals()
 
     def run(self):
-        ptvsd.debug_this_thread()  # 在此线程启动断点调试
+        # ptvsd.debug_this_thread()  # 在此线程启动断点调试
         global dafault_image
         try:
             url = "https://cmxz.top/images/api/api.php"
