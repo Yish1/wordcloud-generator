@@ -37,7 +37,8 @@ class ZoomableGraphicsView(QtWidgets.QGraphicsView):  # 重载以实现鼠标拖
             self.horizontalScrollBar().setValue(
                 int(self.horizontalScrollBar().value() - delta.x()))
             self.verticalScrollBar().setValue(int(self.verticalScrollBar().value() - delta.y()))
-            #此处必须int，不然容易闪退
+            # 此处必须int，不然容易闪退
+
     def mouseReleaseEvent(self, event):
         if event.button() == QtCore.Qt.LeftButton:
             self.last_pos = QtCore.QPointF()
