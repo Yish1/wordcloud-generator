@@ -20,7 +20,7 @@ from PyQt5.QtWidgets import QGraphicsScene, QGraphicsPixmapItem, QMessageBox, QA
 jieba.set_dictionary(".\dict.txt")
 jieba.initialize()
 # 全局变量
-version = "1.3 Beta 1"
+version = "1.3 Beta 2"
 is_selected_font = 0
 dafault_image = 0
 save_font = ""
@@ -116,7 +116,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # 自定义文本
         self.dialog = CustomDialog_1()
         self.dialog.show()
-        self.dialog.confirm_button.clicked.connect(
+        self.dialog.custom_start_button.clicked.connect(
             lambda: self.start_ana_text(self.dialog.cust_text.toPlainText()))
         # 连接按钮
 
@@ -127,6 +127,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             with open('urlciyun_temp.txt', 'w', encoding="utf8") as file:
                 file.write(cust_text)
             self.start_process(1)
+            self.dialog.custom_start_button.setEnabled(False)
 
     def set_lang(self):
         print("打开语言设置")
@@ -213,6 +214,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def enable_button(self):
         self.pushButton.setEnabled(True)
+        try:
+            self.dialog.custom_start_button.setEnabled(True)
+        except:
+            pass
 
     def show_message(self, message, title, mode=None):
         msgBox = QMessageBox()
@@ -369,8 +374,8 @@ class CustomDialog_1(CustomDialog):
                                     无论海角天涯 我找到你出发
                                     我们从未迷路 
                                     我们终将重逢"""))
-        self.confirm_button = QtWidgets.QPushButton(_("开始生成词云图"), self)
-        self.layout.addWidget(self.confirm_button)
+        self.custom_start_button = QtWidgets.QPushButton(_("开始生成词云图"), self)
+        self.layout.addWidget(self.custom_start_button)
 
 class Language_select_1(Language_select):
     def __init__(self):
