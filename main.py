@@ -20,7 +20,7 @@ from PyQt5.QtWidgets import QGraphicsScene, QGraphicsPixmapItem, QMessageBox, QA
 jieba.set_dictionary(".\dict.txt")
 jieba.initialize()
 # 全局变量
-version = "1.3 Beta 2"
+version = "1.3"
 is_selected_font = 0
 dafault_image = 0
 save_font = ""
@@ -41,15 +41,16 @@ except:
         domain="zh_CN", localedir=localedir1, languages=["zh_CN"])
     _ = translate.gettext
 
+
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def setupUi(self, MainWindow):
         super().setupUi(MainWindow)
         self.lineEdit.setText("https://")
         self.label.setText(_("\n\n\n欢迎使用网页词云生成器！\n"
-                                      "在上方文本框中输入需要分析的网址\n"
-                                      "(需要输入http://或https://协议头)，\n"
-                                      "\n"
-                                      "点击开始按钮，稍后即可在右栏中查看词云。\n\n\n"))
+                             "在上方文本框中输入需要分析的网址\n"
+                             "(需要输入http://或https://协议头)，\n"
+                             "\n"
+                             "点击开始按钮，稍后即可在右栏中查看词云。\n\n\n"))
         self.pushButton.setText(_("开始生成词云图"))
         self.menu.setTitle(_("设置"))
         self.menu_2.setTitle(_("保存"))
@@ -86,12 +87,14 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.set_default_image()
         else:
             pass
+
     def closeEvent(self, event):
         # 关闭其他窗口的代码
         for widget in QApplication.topLevelWidgets():
             if isinstance(widget, QWidget) and widget != self:
                 widget.close()
         event.accept()
+
     def saveimage(self):
         if dafault_image == 1:
             print("保存随机图")
@@ -133,6 +136,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         print("打开语言设置")
         lang = Language_select_1()
         lang.exec_()
+
     def set_Font(self):
         global is_selected_font
         is_selected_font = 1
@@ -169,8 +173,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         msgBox.setWindowTitle(_("网页词云生成器"))
         msgBox.setText(_("感谢您使用网页词云生成器！\n\n这是一个作为Py课设的小工具，使用Pyqt5搭建ui，request、bs4和jieba分析网页内容，"
                        "再使用wordcloud生成词云。\n\n除此之外，还第一次尝试了多线程等性能优化方式，使用Qthread遇到了不少麻烦，比如无法结束线程，内存泄漏等，后面换用线程池(可以自动结束线程)解决了。\n\n"
-                       "不过即便是这样一个小程序，也依旧还有许多的不足（比如MSN和百度系列的网站无法分析），也有许多尚未实现的想法。此工具将会开源，以及在沉梦小站中分享一些遇到的问题及解决方法。\n\n"
-                       "作者：Yish_\n\n版本：%s\n\n注：此工具调用了沉梦小站的随机图api") % version)
+                         "不过即便是这样一个小程序，也依旧还有许多的不足（比如MSN和百度系列的网站无法分析），也有许多尚未实现的想法。此工具将会开源，以及在沉梦小站中分享一些遇到的问题及解决方法。\n\n"
+                         "作者：Yish_\n\n版本：%s\n\n注：此工具调用了沉梦小站的随机图api") % version)
         msgBox.setIconPixmap(QIcon('wc.ico').pixmap(64, 64))
         msgBox.exec_()
 
@@ -192,6 +196,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.thread.signals.update_label.connect(self.update_label)
         self.thread.signals.enable_button.connect(self.enable_button)
         self.thread.signals.show_message.connect(self.show_message)
+        self.thread.signals.set_Font.connect(self.set_Font)
         self.thread.signals.update_graphics_view.connect(
             self.update_graphics_view)
         self.thread.signals.update_pushbotton.connect(self.update_pushbotton)
@@ -245,6 +250,7 @@ class select_font_1(select_font):
         self.ok_button.setText(_("确定"))
         self.ok_button.clicked.connect(self.accept_font)
         self.fontComboBox.currentFontChanged.connect(self.updateFontPreview)
+        self.ok_button.setEnabled(False)
         self.dialog.exec_()
 
     def accept_font(self):
@@ -302,7 +308,8 @@ class select_font_1(select_font):
                             pass
                         elif select_name == name:
                             font.close()
-                            print(_("找到字体%s, %s") % (name, self.selected_font_path))
+                            print(_("找到字体%s, %s") %
+                                  (name, self.selected_font_path))
                             self.ok_button.setEnabled(True)
                             result = 1
                             return result, self.selected_font_path
@@ -337,7 +344,8 @@ class select_font_1(select_font):
                     if select_name == None:
                         pass
                     elif select_name == name:
-                        print(_("找到字体%s, %s") % (name, self.selected_font_path))
+                        print(_("找到字体%s, %s") %
+                              (name, self.selected_font_path))
                         self.ok_button.setEnabled(True)
                         result = 1
                         font.close()
@@ -346,6 +354,8 @@ class select_font_1(select_font):
         font.close()
         font_collection.close()
         return 0, ""
+
+
 class CustomDialog_1(CustomDialog):
     def __init__(self):
         super().__init__()
@@ -377,6 +387,7 @@ class CustomDialog_1(CustomDialog):
         self.custom_start_button = QtWidgets.QPushButton(_("开始生成词云图"), self)
         self.layout.addWidget(self.custom_start_button)
 
+
 class Language_select_1(Language_select):
     def __init__(self):
         super().__init__()
@@ -387,14 +398,14 @@ class Language_select_1(Language_select):
         self.langok_button.setMinimumHeight(40)
         self.layout.addWidget(self.langok_button)
         self.langok_button.clicked.connect(self.change_lang)
-        
 
     def populateComboBox(self):
         # 读取指定目录下的文件夹名
         locale_dir = "./locale"
         try:
             if os.path.exists(locale_dir) and os.path.isdir(locale_dir):
-                folders = [folder for folder in os.listdir(locale_dir) if os.path.isdir(os.path.join(locale_dir, folder))]
+                folders = [folder for folder in os.listdir(
+                    locale_dir) if os.path.isdir(os.path.join(locale_dir, folder))]
                 self.comboBox.addItems(folders)
         except Exception as e:
             print(f"读取语言失败:{e}")
@@ -421,6 +432,7 @@ class WorkerSignals(QObject):
     show_message = pyqtSignal(str, str)
     update_graphics_view = pyqtSignal(object)
     finished = pyqtSignal()
+    set_Font = pyqtSignal()
 
 
 class GetDefaultPicture(QRunnable):
@@ -465,7 +477,7 @@ class GetDefaultPicture(QRunnable):
             wc_scene = QGraphicsScene()
             wc_scene.addItem(wc_item)
             self.signals.update_graphics_view.emit(wc_scene)
-            print("获取随机图失败，使用 wc.png")
+            print("获取随机图失败:%s，使用 wc.png" % e)
 
         self.setAutoDelete(True)
         # 启用自动删除子线程
@@ -549,11 +561,22 @@ class WorkerThread(QRunnable):
                 path = "urlciyun_temp.txt"
                 if is_selected_font == 1:
                     font = save_font
-                    # 默认使用方正舒体
+                    # 默认使用方正舒体，但也有电脑没这个字体(被精简掉了)
                     if font == "" or font is None:
                         font = r'C:\Windows\Fonts\FZSTK.TTF'
                 else:
                     font = r'C:\Windows\Fonts\FZSTK.TTF'
+                try:
+                    if os.path.exists(font):
+                        pass
+                    else:
+                        raise FileNotFoundError(
+                            "Your computer does not have FZSTK.TTF font.")
+                except FileNotFoundError as e:
+                    self.signals.set_Font.emit()
+                    transmit_message(_("请选择一个用于生成词云图的字体！\n%s") %
+                                     e, _("请先选择字体！"))
+                    return
                 print(f"本次词云图使用{font}字体生成")
 
                 def tcg(texts):
@@ -613,7 +636,8 @@ class WorkerThread(QRunnable):
             # 自定义模式
             self.signals.update_pushbotton.emit(_("词云图装载中...\n正在分析文本..."))
             update_progress_bar(0, 20)
-            self.signals.update_pushbotton.emit(_("词云图装载中...\n(正在生成词云图，卡顿是正常现象)"))
+            self.signals.update_pushbotton.emit(
+                _("词云图装载中...\n(正在生成词云图，卡顿是正常现象)"))
             update_progress_bar(20, 50)
             make_wc()
             update_progress_bar(50, 100, 0.01)
